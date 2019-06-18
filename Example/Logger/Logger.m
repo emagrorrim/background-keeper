@@ -8,8 +8,6 @@
 
 #import "Logger.h"
 
-#import <UIKit/UIKit.h>
-
 static Logger *sharedLogger;
 
 @interface Logger ()
@@ -49,9 +47,14 @@ static Logger *sharedLogger;
   return [NSString stringWithFormat:@"[%d][%@][%@]", self.count, [df stringFromDate:self.startDate], [df stringFromDate:[NSDate date]]];
 }
 
++ (UITextView *)displayer {
+  Logger *logger = [Logger sharedLogger];
+  return logger.displayer;
+}
+
 + (NSString *)info:(NSString *)info {
   Logger *logger = [Logger sharedLogger];
-  NSString *msg = [[[logger prefix] stringByAppendingString:@"Info: "] stringByAppendingString:info];
+  NSString *msg = [[[logger prefix] stringByAppendingString:@" Info: "] stringByAppendingString:info];
   if (logger.displayer.text.length > 10000) {
     logger.displayer.text = @"";
   }
@@ -63,7 +66,7 @@ static Logger *sharedLogger;
 
 + (NSString *)error:(NSString *)error {
   Logger *logger = [Logger sharedLogger];
-  NSString *msg = [[[logger prefix] stringByAppendingString:@"Error: "] stringByAppendingString:error];
+  NSString *msg = [[[logger prefix] stringByAppendingString:@" Error: "] stringByAppendingString:error];
   if (logger.displayer.text.length > 10000) {
     logger.displayer.text = @"";
   }
