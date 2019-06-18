@@ -12,6 +12,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "PLLocationBackgroundKeeper.h"
+#import "Logger.h"
 
 const int POLLING_DURATION = 20;
 
@@ -42,15 +43,16 @@ const int POLLING_DURATION = 20;
     self.timer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:POLLING_DURATION target:self selector:@selector(backgroundChecking) userInfo:nil repeats:YES];
     self.runLoopRef = CFRunLoopGetCurrent();
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+    CFRunLoopRun();
   });
 }
 
 - (void)backgroundChecking {
   dispatch_async(dispatch_get_main_queue(), ^{
     if ([[UIApplication sharedApplication] backgroundTimeRemaining] < POLLING_DURATION + 1) {
-      NSLog(@"后台快被杀死了");
+      [Logger info:[NSString stringWithFormat:@"剩余可执行时间小于轮询时间 -> 剩余：%f", [[UIApplication sharedApplication] backgroundTimeRemaining]]];
     } else {
-      NSLog(@"后台继续活跃呢");
+      [Logger info:[NSString stringWithFormat:@"剩余可执行时间大于轮询时间 -> 剩余：%f", [[UIApplication sharedApplication] backgroundTimeRemaining]]];
     }
     [self.locationBGKeeper refresh];
   });

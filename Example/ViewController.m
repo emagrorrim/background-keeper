@@ -25,7 +25,6 @@
   [self requestData];
   UITextView *loggerDisplayer = Logger.displayer;
   loggerDisplayer.translatesAutoresizingMaskIntoConstraints = NO;
-  loggerDisplayer.userInteractionEnabled = NO;
   loggerDisplayer.editable = NO;
   [self.view addSubview:loggerDisplayer];
   [NSLayoutConstraint activateConstraints:@[
@@ -37,18 +36,19 @@
 }
 
 - (void)requestData {
-  [self.networkClient GET:@"https://my-json-server.typicode.com/typicode/demo/profile"
+  [self.networkClient GET:@"https://device-library-api.herokuapp.com/devices/3d1c2339-7a1d-4806-9848-9171f42320cf"
                parameters:nil
                  progress:^(NSProgress * _Nonnull downloadProgress) {}
                   success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    [Logger info:[responseObject description]];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    NSDictionary *json = responseObject;
+                    [Logger info:json[@"name"]];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                       [self requestData];
                     });
                   }
                   failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                     [Logger error:[error localizedDescription]];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                       [self requestData];
                     });
                   }];
