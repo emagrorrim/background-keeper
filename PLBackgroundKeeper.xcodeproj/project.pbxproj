@@ -15,6 +15,7 @@
 		7C14D56322B9118F001C7B2F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C14D56222B9118F001C7B2F /* main.m */; };
 		7C14D56B22B91214001C7B2F /* PLBackgroundKeeper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C14D56A22B91214001C7B2F /* PLBackgroundKeeper.m */; };
 		7C14D56F22B9157C001C7B2F /* PLLocationBackgroundKeeper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C14D56E22B9157C001C7B2F /* PLLocationBackgroundKeeper.m */; };
+		7C14D57322B926D7001C7B2F /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C14D57222B926D7001C7B2F /* Logger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		7C14D56A22B91214001C7B2F /* PLBackgroundKeeper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLBackgroundKeeper.m; sourceTree = "<group>"; };
 		7C14D56D22B9157C001C7B2F /* PLLocationBackgroundKeeper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLLocationBackgroundKeeper.h; sourceTree = "<group>"; };
 		7C14D56E22B9157C001C7B2F /* PLLocationBackgroundKeeper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLLocationBackgroundKeeper.m; sourceTree = "<group>"; };
+		7C14D57122B926D7001C7B2F /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		7C14D57222B926D7001C7B2F /* Logger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Logger.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +96,8 @@
 		7C14D57022B91B18001C7B2F /* Logger */ = {
 			isa = PBXGroup;
 			children = (
+				7C14D57122B926D7001C7B2F /* Logger.h */,
+				7C14D57222B926D7001C7B2F /* Logger.m */,
 			);
 			path = Logger;
 			sourceTree = "<group>";
@@ -175,6 +180,7 @@
 				7C14D55822B9118E001C7B2F /* ViewController.m in Sources */,
 				7C14D56322B9118F001C7B2F /* main.m in Sources */,
 				7C14D55522B9118E001C7B2F /* AppDelegate.m in Sources */,
+				7C14D57322B926D7001C7B2F /* Logger.m in Sources */,
 				7C14D56B22B91214001C7B2F /* PLBackgroundKeeper.m in Sources */,
 				7C14D56F22B9157C001C7B2F /* PLLocationBackgroundKeeper.m in Sources */,
 			);
