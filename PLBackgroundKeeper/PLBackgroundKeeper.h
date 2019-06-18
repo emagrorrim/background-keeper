@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PLBackgroundKeeper : NSObject
 
-- (void)setupEnv;
 - (void)start;
 - (void)stop;
 

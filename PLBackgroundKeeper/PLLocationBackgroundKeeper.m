@@ -18,12 +18,15 @@
 
 @implementation PLLocationBackgroundKeeper
 
-- (void)setupEnv {
-  if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse) {
-    [self.locationManager requestAlwaysAuthorization];
+- (instancetype)init {
+  if (self = [super init]) {
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse) {
+      [self.locationManager requestAlwaysAuthorization];
+    }
+    [self.locationManager startUpdatingLocation];
+    [self.locationManager stopUpdatingLocation];
   }
-  [self.locationManager startUpdatingLocation];
-  [self.locationManager stopUpdatingLocation];
+  return self;
 }
 
 - (void)start {
