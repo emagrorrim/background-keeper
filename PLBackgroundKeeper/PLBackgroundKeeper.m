@@ -12,7 +12,6 @@
 
 #import "PLLocationBackgroundKeeper.h"
 #import "PLAudioBackgroundKeeper.h"
-#import "Logger.h"
 
 const int POLLING_DURATION = 20;
 
@@ -53,10 +52,10 @@ const int POLLING_DURATION = 20;
 - (void)backgroundChecking {
   dispatch_async(dispatch_get_main_queue(), ^{
     if ([[UIApplication sharedApplication] backgroundTimeRemaining] < POLLING_DURATION + 1) {
-      [Logger info:[NSString stringWithFormat:@"剩余可执行时间小于轮询时间 -> 剩余：%f", [[UIApplication sharedApplication] backgroundTimeRemaining]]];
+      NSLog(@"%@", [NSString stringWithFormat:@"剩余可执行时间小于轮询时间(%ds) -> 剩余：%f", POLLING_DURATION, [[UIApplication sharedApplication] backgroundTimeRemaining]]);
       [self.audioBGKeeper refresh];
     } else {
-      [Logger info:[NSString stringWithFormat:@"剩余可执行时间大于轮询时间 -> 剩余：%f", [[UIApplication sharedApplication] backgroundTimeRemaining]]];
+      NSLog(@"%@", [NSString stringWithFormat:@"剩余可执行时间大于于轮询时间(%ds) -> 剩余：%f", POLLING_DURATION, [[UIApplication sharedApplication] backgroundTimeRemaining]]);
     }
 //    [self.locationBGKeeper refresh];
   });

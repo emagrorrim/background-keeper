@@ -60,8 +60,8 @@
 }
 
 - (void)refresh {
-  [self stopBackgroundTaskIfNeeded];
   [self.player play];
+  [self stopBackgroundTaskIfNeeded];
   [self applyForBackgroundTask];
   [self.player stop];
 }
