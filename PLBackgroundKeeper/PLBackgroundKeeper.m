@@ -9,9 +9,9 @@
 #import "PLBackgroundKeeper.h"
 
 #import <UIKit/UIKit.h>
-#import <AVFoundation/AVFoundation.h>
 
 #import "PLLocationBackgroundKeeper.h"
+#import "PLAudioBackgroundKeeper.h"
 #import "Logger.h"
 
 const int POLLING_DURATION = 20;
@@ -23,6 +23,7 @@ const int POLLING_DURATION = 20;
 @property (nonatomic, strong) dispatch_queue_t queue;
 
 @property (nonatomic, strong) PLLocationBackgroundKeeper *locationBGKeeper;
+@property (nonatomic, strong) PLAudioBackgroundKeeper *audioBGKeeper;
 
 @end
 
@@ -32,13 +33,15 @@ const int POLLING_DURATION = 20;
 {
   if (self = [super init]) {
     _locationBGKeeper = [[PLLocationBackgroundKeeper alloc] init];
+    _audioBGKeeper = [[PLAudioBackgroundKeeper alloc] init];
     _queue = dispatch_queue_create("com.background", NULL);
   }
   return self;
 }
 
 - (void)start {
-  [self.locationBGKeeper start];
+//  [self.locationBGKeeper start];
+  [self.audioBGKeeper start];
   dispatch_async(self.queue, ^{
     self.timer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:POLLING_DURATION target:self selector:@selector(backgroundChecking) userInfo:nil repeats:YES];
     self.runLoopRef = CFRunLoopGetCurrent();
@@ -51,15 +54,17 @@ const int POLLING_DURATION = 20;
   dispatch_async(dispatch_get_main_queue(), ^{
     if ([[UIApplication sharedApplication] backgroundTimeRemaining] < POLLING_DURATION + 1) {
       [Logger info:[NSString stringWithFormat:@"剩余可执行时间小于轮询时间 -> 剩余：%f", [[UIApplication sharedApplication] backgroundTimeRemaining]]];
+      [self.audioBGKeeper refresh];
     } else {
       [Logger info:[NSString stringWithFormat:@"剩余可执行时间大于轮询时间 -> 剩余：%f", [[UIApplication sharedApplication] backgroundTimeRemaining]]];
     }
-    [self.locationBGKeeper refresh];
+//    [self.locationBGKeeper refresh];
   });
 }
 
 - (void)stop {
-  [self.locationBGKeeper stop];
+//  [self.locationBGKeeper stop];
+  [self.audioBGKeeper stop];
   CFRunLoopStop(self.runLoopRef);
   [self.timer invalidate];
   self.timer = nil;

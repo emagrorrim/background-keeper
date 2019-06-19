@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,8 @@
 		7C14D56B22B91214001C7B2F /* PLBackgroundKeeper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C14D56A22B91214001C7B2F /* PLBackgroundKeeper.m */; };
 		7C14D56F22B9157C001C7B2F /* PLLocationBackgroundKeeper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C14D56E22B9157C001C7B2F /* PLLocationBackgroundKeeper.m */; };
 		7C14D57322B926D7001C7B2F /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C14D57222B926D7001C7B2F /* Logger.m */; };
+		7C69050F22BA706A000BB9DE /* slience.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7C69050E22BA706A000BB9DE /* slience.mp3 */; };
+		7CFB0A4F22BA3F3600740536 /* PLAudioBackgroundKeeper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CFB0A4E22BA3F3600740536 /* PLAudioBackgroundKeeper.m */; };
 		8A5647909BB0E5A00E73285C /* Pods_PLBackgroundKeeper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DAB7BD0772F85C1F347F1C /* Pods_PLBackgroundKeeper.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +39,9 @@
 		7C14D56E22B9157C001C7B2F /* PLLocationBackgroundKeeper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLLocationBackgroundKeeper.m; sourceTree = "<group>"; };
 		7C14D57122B926D7001C7B2F /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		7C14D57222B926D7001C7B2F /* Logger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Logger.m; sourceTree = "<group>"; };
+		7C69050E22BA706A000BB9DE /* slience.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slience.mp3; sourceTree = "<group>"; };
+		7CFB0A4D22BA3F3600740536 /* PLAudioBackgroundKeeper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLAudioBackgroundKeeper.h; sourceTree = "<group>"; };
+		7CFB0A4E22BA3F3600740536 /* PLAudioBackgroundKeeper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLAudioBackgroundKeeper.m; sourceTree = "<group>"; };
 		9EDC67ABC59429E995323E34 /* Pods-PLBackgroundKeeper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLBackgroundKeeper.debug.xcconfig"; path = "Target Support Files/Pods-PLBackgroundKeeper/Pods-PLBackgroundKeeper.debug.xcconfig"; sourceTree = "<group>"; };
 		F3245174EF52A15AAC66C155 /* Pods-PLBackgroundKeeper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLBackgroundKeeper.release.xcconfig"; path = "Target Support Files/Pods-PLBackgroundKeeper/Pods-PLBackgroundKeeper.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,10 +105,13 @@
 		7C14D56C22B91317001C7B2F /* PLBackgroundKeeper */ = {
 			isa = PBXGroup;
 			children = (
+				7C69051022BA706F000BB9DE /* Resource */,
 				7C14D56922B91214001C7B2F /* PLBackgroundKeeper.h */,
 				7C14D56A22B91214001C7B2F /* PLBackgroundKeeper.m */,
 				7C14D56D22B9157C001C7B2F /* PLLocationBackgroundKeeper.h */,
 				7C14D56E22B9157C001C7B2F /* PLLocationBackgroundKeeper.m */,
+				7CFB0A4D22BA3F3600740536 /* PLAudioBackgroundKeeper.h */,
+				7CFB0A4E22BA3F3600740536 /* PLAudioBackgroundKeeper.m */,
 			);
 			path = PLBackgroundKeeper;
 			sourceTree = "<group>";
@@ -117,13 +125,20 @@
 			path = Logger;
 			sourceTree = "<group>";
 		};
+		7C69051022BA706F000BB9DE /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				7C69050E22BA706A000BB9DE /* slience.mp3 */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		AA986E2EC96B0331615BA6EA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				9EDC67ABC59429E995323E34 /* Pods-PLBackgroundKeeper.debug.xcconfig */,
 				F3245174EF52A15AAC66C155 /* Pods-PLBackgroundKeeper.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -191,6 +206,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C69050F22BA706A000BB9DE /* slience.mp3 in Resources */,
 				7C14D56022B9118F001C7B2F /* LaunchScreen.storyboard in Resources */,
 				7C14D55D22B9118F001C7B2F /* Assets.xcassets in Resources */,
 				7C14D55B22B9118E001C7B2F /* Main.storyboard in Resources */,
@@ -246,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CFB0A4F22BA3F3600740536 /* PLAudioBackgroundKeeper.m in Sources */,
 				7C14D55822B9118E001C7B2F /* ViewController.m in Sources */,
 				7C14D56322B9118F001C7B2F /* main.m in Sources */,
 				7C14D55522B9118E001C7B2F /* AppDelegate.m in Sources */,
