@@ -39,8 +39,9 @@ const int POLLING_DURATION = 20;
 }
 
 - (void)start {
-//  [self.locationBGKeeper start];
-  [self.audioBGKeeper start];
+  if (![self.audioBGKeeper start]) {
+    [self.locationBGKeeper start];
+  }
   dispatch_async(self.queue, ^{
     self.timer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:POLLING_DURATION target:self selector:@selector(backgroundChecking) userInfo:nil repeats:YES];
     self.runLoopRef = CFRunLoopGetCurrent();
@@ -56,13 +57,16 @@ const int POLLING_DURATION = 20;
     } else {
       NSLog(@"%@", [NSString stringWithFormat:@"剩余可执行时间大于于轮询时间(%ds) -> 剩余：%f", POLLING_DURATION, [[UIApplication sharedApplication] backgroundTimeRemaining]]);
     }
-    [self.audioBGKeeper refresh];
-//    [self.locationBGKeeper refresh];
+    if ([self.audioBGKeeper refresh]) {
+      [self.locationBGKeeper stop];
+    } else {
+      [self.locationBGKeeper refresh];
+    }
   });
 }
 
 - (void)stop {
-//  [self.locationBGKeeper stop];
+  [self.locationBGKeeper stop];
   [self.audioBGKeeper stop];
   CFRunLoopStop(self.runLoopRef);
   [self.timer invalidate];

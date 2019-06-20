@@ -15,6 +15,8 @@
 @property (nonatomic, strong) AVAudioPlayer *player;
 @property (nonatomic, assign) UIBackgroundTaskIdentifier task;
 
+@property (nonatomic, assign) BOOL isAvailable;
+
 @end
 
 @implementation PLAudioBackgroundKeeper
@@ -22,7 +24,8 @@
 - (instancetype)init
 {
   if (self = [super init]) {
-    [self setupAudioSession];
+    [self setupNotifications];
+    _isAvailable = [self setupAudioSession];
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"slience" ofType:@"mp3"];
     NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:filePath];
     self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
@@ -33,25 +36,53 @@
   return self;
 }
 
-- (void)setupAudioSession {
+- (void)setupNotifications {
+  [NSNotificationCenter.defaultCenter addObserver:self
+                                         selector:@selector(handleInterruption:)
+                                             name:AVAudioSessionInterruptionNotification
+                                           object:nil];
+}
+
+- (void)handleInterruption:(NSNotification *)notification {
+  AVAudioSessionInterruptionType type = [notification.userInfo[AVAudioSessionInterruptionTypeKey] unsignedIntegerValue];
+  switch (type) {
+    case AVAudioSessionInterruptionTypeBegan: {
+      self.isAvailable = NO;
+      break;
+    }
+    case AVAudioSessionInterruptionTypeEnded: {
+      self.isAvailable = YES;
+      break;
+    }
+  }
+}
+
+- (BOOL)setupAudioSession {
   AVAudioSession *audioSession = [AVAudioSession sharedInstance];
   NSError *error = nil;
   [audioSession setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
   if (error) {
     NSLog(@"Error setCategory AVAudioSession: %@", error);
+    return NO;
   }
   NSLog(@"%d", audioSession.isOtherAudioPlaying);
   NSError *activeSetError = nil;
   [audioSession setActive:YES error:&activeSetError];
   if (activeSetError) {
     NSLog(@"Error activating AVAudioSession: %@", activeSetError);
+    return NO;
   }
+  return YES;
 }
 
-- (void)start {
-  [self.player play];
-  [self applyForBackgroundTask];
-  [self.player stop];
+- (BOOL)start {
+  self.isAvailable = [self setupAudioSession];
+  if (self.isAvailable) {
+    [self.player play];
+    [self applyForBackgroundTask];
+    [self.player stop];
+  }
+  return self.isAvailable;
 }
 
 - (void)stop {
@@ -59,11 +90,15 @@
   [self stopBackgroundTaskIfNeeded];
 }
 
-- (void)refresh {
-  [self.player play];
-  [self stopBackgroundTaskIfNeeded];
-  [self applyForBackgroundTask];
-  [self.player stop];
+- (BOOL)refresh {
+  self.isAvailable = [self setupAudioSession];
+  if (self.isAvailable) {
+    [self.player play];
+    [self stopBackgroundTaskIfNeeded];
+    [self applyForBackgroundTask];
+    [self.player stop];
+  }
+  return self.isAvailable;
 }
 
 - (void)applyForBackgroundTask {

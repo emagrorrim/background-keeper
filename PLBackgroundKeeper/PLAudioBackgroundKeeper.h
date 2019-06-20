@@ -12,9 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PLAudioBackgroundKeeper : NSObject
 
-- (void)start;
+- (BOOL)start;
 - (void)stop;
-- (void)refresh;
+- (BOOL)refresh;
 
 @end
 
