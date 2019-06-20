@@ -53,10 +53,10 @@ const int POLLING_DURATION = 20;
   dispatch_async(dispatch_get_main_queue(), ^{
     if ([[UIApplication sharedApplication] backgroundTimeRemaining] < POLLING_DURATION + 1) {
       NSLog(@"%@", [NSString stringWithFormat:@"剩余可执行时间小于轮询时间(%ds) -> 剩余：%f", POLLING_DURATION, [[UIApplication sharedApplication] backgroundTimeRemaining]]);
-      [self.audioBGKeeper refresh];
     } else {
       NSLog(@"%@", [NSString stringWithFormat:@"剩余可执行时间大于于轮询时间(%ds) -> 剩余：%f", POLLING_DURATION, [[UIApplication sharedApplication] backgroundTimeRemaining]]);
     }
+    [self.audioBGKeeper refresh];
 //    [self.locationBGKeeper refresh];
   });
 }
