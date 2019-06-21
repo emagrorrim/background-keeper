@@ -6,6 +6,10 @@
 //  Copyright © 2019 org.emagrorrim. All rights reserved.
 //
 
+/*
+ Import this file will import all the needed classes.
+ */
+
 #ifndef PLBGKeeper_h
 #define PLBGKeeper_h
 
