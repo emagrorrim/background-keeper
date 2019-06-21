@@ -54,10 +54,11 @@
 
 - (void)backgroundKeeperDidRefreshed {
   int pollingInterval = self.backgroundKeeper.options.pollingInterval;
-  if ([[UIApplication sharedApplication] backgroundTimeRemaining] < pollingInterval + 1) {
-    [Logger info:[NSString stringWithFormat:@"剩余可执行时间小于轮询时间(%ds) -> 剩余：%f", pollingInterval, [[UIApplication sharedApplication] backgroundTimeRemaining]]];
+  NSTimeInterval remainingTime = [[UIApplication sharedApplication] backgroundTimeRemaining];
+  if (remainingTime < pollingInterval + 1) {
+    [Logger info:[NSString stringWithFormat:@"剩余可执行时间小于轮询时间(%ds) -> 剩余：%es", pollingInterval, remainingTime]];
   } else {
-    [Logger info:[NSString stringWithFormat:@"剩余可执行时间大于于轮询时间(%ds) -> 剩余：%f", pollingInterval, [[UIApplication sharedApplication] backgroundTimeRemaining]]];
+    [Logger info:[NSString stringWithFormat:@"剩余可执行时间大于于轮询时间(%ds) -> 剩余：%es", pollingInterval, remainingTime]];
   }
 }
 
