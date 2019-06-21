@@ -13,6 +13,7 @@
 #import "PLBackgroundKeeperOptions.h"
 #import "PLLocationBackgroundKeeper.h"
 #import "PLAudioBackgroundKeeper.h"
+#import "PLBackgroundKeeperStatus.h"
 
 @interface PLBackgroundKeeper ()
 
@@ -22,8 +23,6 @@
 
 @property (nonatomic, strong) PLLocationBackgroundKeeper *locationBGKeeper;
 @property (nonatomic, strong) PLAudioBackgroundKeeper *audioBGKeeper;
-
-@property (nonatomic, assign) PLBackgroundKeeperOptions *options;
 
 @end
 
@@ -57,17 +56,22 @@
     case PLBackgroundKeeperTypeAuto: {
       if (![self.audioBGKeeper start]) {
         [self.locationBGKeeper start];
+        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOn];
+      } else {
+        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOn];
       }
       break;
     }
     case PLBackgroundKeeperTypeAudio: {
       [self.locationBGKeeper stop];
       [self.audioBGKeeper start];
+      [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOn];
       break;
     }
     case PLBackgroundKeeperTypeLocation: {
       [self.audioBGKeeper stop];
       [self.locationBGKeeper start];
+      [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOn];
       break;
     }
   }
@@ -82,30 +86,34 @@
 
 - (void)refreshBackgroundKeeper {
   dispatch_async(dispatch_get_main_queue(), ^{
-    if ([[UIApplication sharedApplication] backgroundTimeRemaining] < self.options.pollingInterval + 1) {
-      NSLog(@"%@", [NSString stringWithFormat:@"剩余可执行时间小于轮询时间(%ds) -> 剩余：%f", self.options.pollingInterval, [[UIApplication sharedApplication] backgroundTimeRemaining]]);
-    } else {
-      NSLog(@"%@", [NSString stringWithFormat:@"剩余可执行时间大于于轮询时间(%ds) -> 剩余：%f", self.options.pollingInterval, [[UIApplication sharedApplication] backgroundTimeRemaining]]);
-    }
     switch (self.options.bgKeeperType) {
       case PLBackgroundKeeperTypeAuto: {
         if ([self.audioBGKeeper refresh]) {
           [self.locationBGKeeper stop];
+          [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOff];
+          [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOn];
         } else {
           [self.locationBGKeeper start];
           [self.locationBGKeeper refresh];
+          [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOn];
+          [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOff];
         }
         break;
       }
       case PLBackgroundKeeperTypeAudio: {
         [self.audioBGKeeper refresh];
+        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOff];
+        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOn];
         break;
       }
       case PLBackgroundKeeperTypeLocation: {
         [self.locationBGKeeper refresh];
+        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOn];
+        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOff];
         break;
       }
     }
+    [self.delegate backgroundKeeperDidRefreshed];
   });
 }
 
@@ -119,6 +127,8 @@
 - (void)stopAllBGKeeper {
   [self.locationBGKeeper stop];
   [self.audioBGKeeper stop];
+  [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOff];
+  [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOff];
 }
 
 @end

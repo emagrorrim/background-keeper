@@ -44,6 +44,7 @@
 		7CFAA85C22BCFF960039563F /* PLBackgroundKeeperOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLBackgroundKeeperOptions.h; sourceTree = "<group>"; };
 		7CFAA85D22BCFF960039563F /* PLBackgroundKeeperOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLBackgroundKeeperOptions.m; sourceTree = "<group>"; };
 		7CFAA85F22BD06000039563F /* PLBGKeeper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLBGKeeper.h; sourceTree = "<group>"; };
+		7CFAA86022BD0B020039563F /* PLBackgroundKeeperStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLBackgroundKeeperStatus.h; sourceTree = "<group>"; };
 		7CFB0A4D22BA3F3600740536 /* PLAudioBackgroundKeeper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLAudioBackgroundKeeper.h; sourceTree = "<group>"; };
 		7CFB0A4E22BA3F3600740536 /* PLAudioBackgroundKeeper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLAudioBackgroundKeeper.m; sourceTree = "<group>"; };
 		9EDC67ABC59429E995323E34 /* Pods-PLBackgroundKeeper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLBackgroundKeeper.debug.xcconfig"; path = "Target Support Files/Pods-PLBackgroundKeeper/Pods-PLBackgroundKeeper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				7CFAA85F22BD06000039563F /* PLBGKeeper.h */,
+				7CFAA86022BD0B020039563F /* PLBackgroundKeeperStatus.h */,
 				7C14D56922B91214001C7B2F /* PLBackgroundKeeper.h */,
 				7C14D56A22B91214001C7B2F /* PLBackgroundKeeper.m */,
 				7CFAA85C22BCFF960039563F /* PLBackgroundKeeperOptions.h */,

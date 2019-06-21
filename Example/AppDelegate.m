@@ -8,8 +8,9 @@
 
 #import "AppDelegate.h"
 #import "PLBGKeeper.h"
+#import "Logger.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <PLBackgroundKeeperDelegate>
 
 @property(nonatomic, strong) PLBackgroundKeeper *backgroundKeeper;
 
@@ -19,6 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   self.backgroundKeeper = [[PLBackgroundKeeper alloc] initWithOptions:[PLBackgroundKeeperOptions defaultOptions]];
+  self.backgroundKeeper.delegate = self;
   return YES;
 }
 
@@ -46,6 +48,45 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma - mark PLBackgroundKeeperDelegate
+
+- (void)backgroundKeeperDidRefreshed {
+  int pollingInterval = self.backgroundKeeper.options.pollingInterval;
+  if ([[UIApplication sharedApplication] backgroundTimeRemaining] < pollingInterval + 1) {
+    [Logger info:[NSString stringWithFormat:@"剩余可执行时间小于轮询时间(%ds) -> 剩余：%f", pollingInterval, [[UIApplication sharedApplication] backgroundTimeRemaining]]];
+  } else {
+    [Logger info:[NSString stringWithFormat:@"剩余可执行时间大于于轮询时间(%ds) -> 剩余：%f", pollingInterval, [[UIApplication sharedApplication] backgroundTimeRemaining]]];
+  }
+}
+
+- (void)backgroundKeeper:(PLBackgroundKeeperType)bgKeeperType didChangedToStatus:(PLBackgroundKeeperStatus)bgKeeperStatus {
+  NSString *backgroundKeeperName = @"";
+  NSString *backgroundKeeperStatus;
+  switch (bgKeeperType) {
+    case PLBackgroundKeeperTypeAudio: {
+      backgroundKeeperName = @"Audio background keeper";
+      break;
+    }
+    case PLBackgroundKeeperTypeLocation: {
+      backgroundKeeperName = @"Location background keeper";
+      break;
+    }
+    default:
+      break;
+  }
+  switch (bgKeeperStatus) {
+    case PLBackgroundKeeperStatusOn: {
+      backgroundKeeperStatus = @"On";
+      break;
+    }
+    case PLBackgroundKeeperStatusOff: {
+      backgroundKeeperStatus = @"Off";
+      break;
+    }
+  }
+  [Logger info:[NSString stringWithFormat:@"%@ is %@", backgroundKeeperName, backgroundKeeperStatus]];
 }
 
 

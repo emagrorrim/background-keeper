@@ -11,5 +11,6 @@
 
 #import "PLBackgroundKeeper.h"
 #import "PLBackgroundKeeperOptions.h"
+#import "PLBackgroundKeeperStatus.h"
 
 #endif /* PLBGKeeper_h */

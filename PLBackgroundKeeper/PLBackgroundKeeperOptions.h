@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, PLBackgroundKeeperType) {
   PLBackgroundKeeperTypeAudio,
   PLBackgroundKeeperTypeLocation,
   PLBackgroundKeeperTypeAuto,
-} PLBackgroundKeeperType;
+};
 
 NS_ASSUME_NONNULL_BEGIN
 
