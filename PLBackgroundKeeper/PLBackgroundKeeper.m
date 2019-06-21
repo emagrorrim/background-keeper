@@ -56,22 +56,22 @@
     case PLBackgroundKeeperTypeAuto: {
       if (![self.audioBGKeeper start]) {
         [self.locationBGKeeper start];
-        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOn];
+        [self notifyDelegateLocationBGKeeperIsOn];
       } else {
-        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOn];
+        [self notifyDelegateAudioBGKeeperIsOn];
       }
       break;
     }
     case PLBackgroundKeeperTypeAudio: {
       [self.locationBGKeeper stop];
       [self.audioBGKeeper start];
-      [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOn];
+      [self notifyDelegateAudioBGKeeperIsOn];
       break;
     }
     case PLBackgroundKeeperTypeLocation: {
       [self.audioBGKeeper stop];
       [self.locationBGKeeper start];
-      [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOn];
+      [self notifyDelegateLocationBGKeeperIsOn];
       break;
     }
   }
@@ -90,26 +90,22 @@
       case PLBackgroundKeeperTypeAuto: {
         if ([self.audioBGKeeper refresh]) {
           [self.locationBGKeeper stop];
-          [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOff];
-          [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOn];
+          [self notifyDelegateAudioBGKeeperIsOn];
         } else {
           [self.locationBGKeeper start];
           [self.locationBGKeeper refresh];
-          [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOn];
-          [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOff];
+          [self notifyDelegateLocationBGKeeperIsOn];
         }
         break;
       }
       case PLBackgroundKeeperTypeAudio: {
         [self.audioBGKeeper refresh];
-        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOff];
-        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOn];
+        [self notifyDelegateAudioBGKeeperIsOn];
         break;
       }
       case PLBackgroundKeeperTypeLocation: {
         [self.locationBGKeeper refresh];
-        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOn];
-        [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOff];
+        [self notifyDelegateLocationBGKeeperIsOn];
         break;
       }
     }
@@ -127,6 +123,20 @@
 - (void)stopAllBGKeeper {
   [self.locationBGKeeper stop];
   [self.audioBGKeeper stop];
+  [self notifyDelegateBothLocationAndAudioBGKeeperIsOff];
+}
+
+- (void)notifyDelegateAudioBGKeeperIsOn {
+  [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOff];
+  [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOn];
+}
+
+- (void)notifyDelegateLocationBGKeeperIsOn {
+  [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOn];
+  [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOff];
+}
+
+- (void)notifyDelegateBothLocationAndAudioBGKeeperIsOff {
   [self.delegate backgroundKeeper:PLBackgroundKeeperTypeLocation didChangedToStatus:PLBackgroundKeeperStatusOff];
   [self.delegate backgroundKeeper:PLBackgroundKeeperTypeAudio didChangedToStatus:PLBackgroundKeeperStatusOff];
 }
