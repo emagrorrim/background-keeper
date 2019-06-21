@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "PLBackgroundKeeper.h"
+#import "PLBGKeeper.h"
 
 @interface AppDelegate ()
 
@@ -18,7 +18,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  self.backgroundKeeper = [[PLBackgroundKeeper alloc] init];
+  self.backgroundKeeper = [[PLBackgroundKeeper alloc] initWithOptions:[PLBackgroundKeeperOptions defaultOptions]];
   return YES;
 }
 

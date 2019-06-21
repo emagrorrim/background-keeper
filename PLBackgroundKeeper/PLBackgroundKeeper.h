@@ -8,9 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class PLBackgroundKeeperOptions;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PLBackgroundKeeper : NSObject
+
+- (instancetype)initWithOptions:(PLBackgroundKeeperOptions *)options;
 
 - (void)start;
 - (void)stop;
