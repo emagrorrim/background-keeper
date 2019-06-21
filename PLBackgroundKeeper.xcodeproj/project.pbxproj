@@ -111,15 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				7CFAA85F22BD06000039563F /* PLBGKeeper.h */,
-				7CFAA86022BD0B020039563F /* PLBackgroundKeeperStatus.h */,
-				7C14D56922B91214001C7B2F /* PLBackgroundKeeper.h */,
-				7C14D56A22B91214001C7B2F /* PLBackgroundKeeper.m */,
-				7CFAA85C22BCFF960039563F /* PLBackgroundKeeperOptions.h */,
-				7CFAA85D22BCFF960039563F /* PLBackgroundKeeperOptions.m */,
-				7C14D56D22B9157C001C7B2F /* PLLocationBackgroundKeeper.h */,
-				7C14D56E22B9157C001C7B2F /* PLLocationBackgroundKeeper.m */,
-				7CFB0A4D22BA3F3600740536 /* PLAudioBackgroundKeeper.h */,
-				7CFB0A4E22BA3F3600740536 /* PLAudioBackgroundKeeper.m */,
+				7CFAA86122BD2B4F0039563F /* BackgroundKeeper */,
+				7CFAA86222BD2B690039563F /* SupportFiles */,
 				7C69051022BA706F000BB9DE /* Resource */,
 			);
 			path = PLBackgroundKeeper;
@@ -140,6 +133,29 @@
 				7C69050E22BA706A000BB9DE /* slience.mp3 */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		7CFAA86122BD2B4F0039563F /* BackgroundKeeper */ = {
+			isa = PBXGroup;
+			children = (
+				7C14D56922B91214001C7B2F /* PLBackgroundKeeper.h */,
+				7C14D56A22B91214001C7B2F /* PLBackgroundKeeper.m */,
+				7C14D56D22B9157C001C7B2F /* PLLocationBackgroundKeeper.h */,
+				7C14D56E22B9157C001C7B2F /* PLLocationBackgroundKeeper.m */,
+				7CFB0A4D22BA3F3600740536 /* PLAudioBackgroundKeeper.h */,
+				7CFB0A4E22BA3F3600740536 /* PLAudioBackgroundKeeper.m */,
+			);
+			path = BackgroundKeeper;
+			sourceTree = "<group>";
+		};
+		7CFAA86222BD2B690039563F /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7CFAA86022BD0B020039563F /* PLBackgroundKeeperStatus.h */,
+				7CFAA85C22BCFF960039563F /* PLBackgroundKeeperOptions.h */,
+				7CFAA85D22BCFF960039563F /* PLBackgroundKeeperOptions.m */,
+			);
+			path = SupportFiles;
 			sourceTree = "<group>";
 		};
 		AA986E2EC96B0331615BA6EA /* Pods */ = {
