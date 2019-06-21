@@ -19,7 +19,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  self.backgroundKeeper = [[PLBackgroundKeeper alloc] initWithOptions:[PLBackgroundKeeperOptions defaultOptions]];
+  self.backgroundKeeper = [[PLBackgroundKeeper alloc] init];
   self.backgroundKeeper.delegate = self;
   return YES;
 }

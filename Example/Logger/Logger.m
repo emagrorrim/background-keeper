@@ -43,7 +43,7 @@ static Logger *sharedLogger;
 
 - (NSString *)prefix {
   NSDateFormatter *df = [[NSDateFormatter alloc] init];
-  [df setDateFormat:@"hh:mm:ss"];
+  [df setDateFormat:@"HH:mm:ss"];
   return [NSString stringWithFormat:@"[%d][%@][%@]", self.count, [df stringFromDate:self.startDate], [df stringFromDate:[NSDate date]]];
 }
 
